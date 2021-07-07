@@ -12,6 +12,7 @@ const routes = [
       {
         path: '/surah/:id',
         name: 'surah',
+        props: true,
         component: () => import('pages/Surah.vue'),
       },
     ],

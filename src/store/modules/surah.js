@@ -23,8 +23,8 @@ export const actions = {
         console.log(err)
       })
   },
-  getSurah({ commit }, surahId) {
-    return SurahService.getSurah(surahId)
+  getSurah({ commit }, payload) {
+    return SurahService.getSurah(payload)
       .then((res) => {
         commit('GET_SURAH', res.data)
       })

@@ -7,7 +7,7 @@
         <q-list padding bordered>
         <q-chip square class="q-ml-md">{{juz.juz_number}}</q-chip>     
           <div class="row">
-            <q-item :to="{name:'surah', params:{id:surah.surahId}}" v-for="surah in juz.verse_mapping" :key="surah.surahId" class="col-3 q-my-sm" clickable v-ripple>
+            <q-item :to="{name:'surah', params:{id:surah.surahId, title:surah.name_simple}}" v-for="surah in juz.verse_mapping" :key="surah.surahId" class="col-3 q-my-sm" clickable v-ripple>
               <q-item-section avatar>
                 <q-avatar color="primary" text-color="white">
                   {{ surah.surahId }}

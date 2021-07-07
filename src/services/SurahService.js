@@ -6,9 +6,9 @@ const SurahService = {
   getSurahList() {
     return axios.get(`${apiUri}/chapters`)
   },
-  getSurah(surahId) {
+  getSurah(payload) {
     return axios.get(
-      `${apiUri}/verses/by_chapter/${surahId}?language=en&words=true&word_fields=text_imlaei`
+      `${apiUri}/verses/by_chapter/${payload.surahId}?language=en&words=true&page=${payload.page}&per_page=10&word_fields=text_imlaei`
     )
   },
 }

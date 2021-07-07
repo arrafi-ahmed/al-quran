@@ -5,7 +5,7 @@
 
         <q-list>
           <div class="row">
-            <q-item :to="{name:'surah', params:{ id : surah.id }}"  exact v-for="surah in surahList" :key="surah.id" class="col-3 q-my-sm" clickable v-ripple>
+            <q-item :to="{name:'surah', params:{ id : surah.id, title:surah.name_simple }}"  exact v-for="surah in surahList" :key="surah.id" class="col-3 q-my-sm" clickable v-ripple>
               <q-item-section avatar>
                 <q-avatar color="primary" text-color="white">
                   {{ surah.id }}

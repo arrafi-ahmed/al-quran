@@ -24,8 +24,35 @@
       </q-tabs>
     </q-header>
 
-    <q-drawer behavior="mobile" v-model="rightDrawerOpen" side="right" bordered overlay>
-      <!-- drawer content -->
+    <q-drawer behavior="mobile" v-model="rightDrawerOpen" side="right" :breakpoint="500" bordered overlay>
+        <q-scroll-area class="fit">
+          <q-list padding class="menu-list">
+            
+            <q-item :to="{name:'home'}" clickable v-ripple>
+              <q-item-section avatar>
+                <q-icon name="home" />
+              </q-item-section>
+
+              <q-item-section>
+                Home
+              </q-item-section>
+            </q-item>
+
+            <a href="http://rafi.gq/" target="_blank">
+              <q-item active clickable v-ripple>
+                <q-item-section avatar>
+                  <q-icon name="code" />
+                </q-item-section>
+
+                <q-item-section>
+                  Developer
+                </q-item-section>
+              </q-item>            
+            </a>
+            
+          </q-list>
+        </q-scroll-area>
+      
     </q-drawer>
 
     <q-page-container>
