@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const apiUri = 'https://api.quran.com/api/v4/juzs'
+const apiUri = 'https://api.quran.com/api/v4'
 
 const JuzService = {
   getJuzList() {
-    return axios.get(`${apiUri}`)
+    return axios.get(`${apiUri}/juzs`)
   },
 }
 
