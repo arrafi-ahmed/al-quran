@@ -137,7 +137,7 @@ module.exports = configure(function (ctx) {
 
       manifest: {
         name: `Al Quran`,
-        short_name: `Al Quran`,
+        short_name: `Al-Quran`,
         description: `A Quasar Framework app`,
         display: 'standalone',
         orientation: 'portrait',
