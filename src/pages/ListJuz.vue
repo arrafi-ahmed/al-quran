@@ -7,12 +7,12 @@
             <q-chip square class="q-ml-md">{{ juz.juz_number }}</q-chip>
             <div class="row">
               <q-item
+                v-for="surah in juz.verse_mapping"
+                :key="surah.surahId"
                 :to="{
                   name: 'surah',
                   params: { id: surah.surahId, title: surah.name_simple },
                 }"
-                v-for="surah in juz.verse_mapping"
-                :key="surah.surahId"
                 class="col-xs-12 col-sm-6 col-md-4 col-lg-3 q-my-sm"
                 clickable
                 v-ripple
@@ -51,36 +51,45 @@ export default {
   setup() {
     const store = useStore()
     const $q = useQuasar()
-    onMounted(async () => {
-      await store.dispatch('juz/getJuzList')
-      getSurahName()
+    onMounted(() => {
+      store
+        .dispatch('juz/getJuzList')
+        .then(() => {
+          if (!$q.localStorage.has('surahList')) {
+            ;(async () => {
+              await store.dispatch('surah/getSurahList')
+              getSurahName()
+              $q.localStorage.set('surahList', surahList.value)
+            })()
+          }
+        })
+        .then(() => {
+          getSurahName()
+        })
+        .catch((err) => {
+          console.log(err)
+        })
     })
+
     const juzList = computed(() => {
       return store.state.juz.juzList
     })
     const surahList = computed(() => {
-      return store.state.surah.surahList
+      return $q.localStorage.has('surahList')
+        ? $q.localStorage.getItem('surahList')
+        : store.state.surah.surahList
     })
-    if ($q.localStorage.has('surahList')) {
-      ;(async () => {
-        surahList.value = await $q.localStorage.getItem('surahList')
-      })()
-    } else {
-      ;(async () => {
-        await store.dispatch('surah/getSurahList')
-        $q.localStorage.set('surahList', surahList.value)
-      })()
-    }
+
     const getSurahName = () => {
       juzList.value.forEach((juz) => {
         Object.entries(juz.verse_mapping).forEach(([surahId, verse]) => {
           const surah = surahList.value.find((surah) => surah.id == surahId)
-          juz.verse_mapping[surahId] = {
+          return (juz.verse_mapping[surahId] = {
             surahId,
             verse,
             name_simple: surah.name_simple,
             translated_name: surah.translated_name.name,
-          }
+          })
         })
       })
     }

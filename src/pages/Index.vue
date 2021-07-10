@@ -46,13 +46,13 @@ export default {
   setup() {
     const store = useStore()
     const $q = useQuasar()
-    onMounted(async () => {
+    ;(async () => {
       await store.dispatch('surah/getSurahList')
 
       if (!$q.localStorage.has('surahList')) {
         $q.localStorage.set('surahList', surahList.value)
       }
-    })
+    })()
     const surahList = computed(() => {
       return store.state.surah.surahList
     })
