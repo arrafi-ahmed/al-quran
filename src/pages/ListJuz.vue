@@ -56,14 +56,13 @@ export default {
         .dispatch('juz/getJuzList')
         .then(() => {
           if (!$q.localStorage.has('surahList')) {
-            ;(async () => {
-              await store.dispatch('surah/getSurahList')
-              getSurahName()
-              $q.localStorage.set('surahList', surahList.value)
-            })()
+            return store.dispatch('surah/getSurahList')
           }
         })
         .then(() => {
+          if (!$q.localStorage.has('surahList')) {
+            $q.localStorage.set('surahList', surahList.value)
+          }
           getSurahName()
         })
         .catch((err) => {
@@ -75,9 +74,7 @@ export default {
       return store.state.juz.juzList
     })
     const surahList = computed(() => {
-      return $q.localStorage.has('surahList')
-        ? $q.localStorage.getItem('surahList')
-        : store.state.surah.surahList
+      return store.state.surah.surahList
     })
 
     const getSurahName = () => {
