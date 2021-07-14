@@ -1,6 +1,8 @@
 import SurahService from '../../services/SurahService'
+import { LocalStorage } from 'quasar'
 
 export const namespaced = true
+
 export const state = {
   surahList: [],
   surah: {},
@@ -31,5 +33,12 @@ export const actions = {
       .catch((err) => {
         console.log(err)
       })
+  },
+}
+export const getters = {
+  optimizedSurahList(state) {
+    return LocalStorage.has('surahList')
+      ? LocalStorage.getItem('surahList')
+      : state.surahList
   },
 }

@@ -1,4 +1,5 @@
 import JuzService from '../../services/JuzService'
+import { LocalStorage } from 'quasar'
 
 export const namespaced = true
 export const state = {
@@ -18,5 +19,12 @@ export const actions = {
       .catch((err) => {
         console.log(err)
       })
+  },
+}
+export const getters = {
+  optimizedJuzList(state) {
+    return LocalStorage.has('juzList')
+      ? LocalStorage.getItem('juzList')
+      : state.juzList
   },
 }

@@ -51,30 +51,38 @@ export default {
   setup() {
     const store = useStore()
     const $q = useQuasar()
+
     onMounted(() => {
-      store
-        .dispatch('juz/getJuzList')
-        .then(() => {
-          if (!$q.localStorage.has('surahList')) {
-            return store.dispatch('surah/getSurahList')
-          }
-        })
-        .then(() => {
-          if (!$q.localStorage.has('surahList')) {
-            $q.localStorage.set('surahList', surahList.value)
-          }
-          getSurahName()
-        })
-        .catch((err) => {
-          console.log(err)
-        })
+      if (!$q.localStorage.has('juzList')) {
+        store
+          .dispatch('juz/getJuzList')
+          .then(() => {
+            if (!$q.localStorage.has('surahList')) {
+              return store.dispatch('surah/getSurahList')
+            }
+          })
+          .then(() => {
+            if (!$q.localStorage.has('surahList')) {
+              $q.localStorage.set('surahList', surahList.value)
+            }
+
+            getSurahName()
+
+            if (!$q.localStorage.has('juzList')) {
+              $q.localStorage.set('juzList', juzList.value)
+            }
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
     })
 
     const juzList = computed(() => {
-      return store.state.juz.juzList
+      return store.getters['juz/optimizedJuzList']
     })
     const surahList = computed(() => {
-      return store.state.surah.surahList
+      return store.getters['surah/optimizedSurahList']
     })
 
     const getSurahName = () => {

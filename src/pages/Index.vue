@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { onMounted, computed } from 'vue'
+import { computed } from 'vue'
 import { useQuasar } from 'quasar'
 import { useStore } from 'vuex'
 
@@ -46,15 +46,19 @@ export default {
   setup() {
     const store = useStore()
     const $q = useQuasar()
-    ;(async () => {
-      await store.dispatch('surah/getSurahList')
 
-      if (!$q.localStorage.has('surahList')) {
-        $q.localStorage.set('surahList', surahList.value)
-      }
-    })()
+    if (!$q.localStorage.has('surahList')) {
+      ;(async () => {
+        await store.dispatch('surah/getSurahList')
+
+        if (!$q.localStorage.has('surahList')) {
+          $q.localStorage.set('surahList', surahList.value)
+        }
+      })()
+    }
+
     const surahList = computed(() => {
-      return store.state.surah.surahList
+      return store.getters['surah/optimizedSurahList']
     })
 
     return { surahList }
