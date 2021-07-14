@@ -23,8 +23,12 @@ export const actions = {
 }
 export const getters = {
   optimizedJuzList(state) {
-    return LocalStorage.has('juzList')
-      ? LocalStorage.getItem('juzList')
-      : state.juzList
+    if (state.juzList.length > 0) {
+      LocalStorage.set('juzList', state.juzList)
+      return state.juzList
+    }
+    if (LocalStorage.has('juzList')) {
+      return LocalStorage.getItem('juzList')
+    }
   },
 }

@@ -37,8 +37,12 @@ export const actions = {
 }
 export const getters = {
   optimizedSurahList(state) {
-    return LocalStorage.has('surahList')
-      ? LocalStorage.getItem('surahList')
-      : state.surahList
+    if (state.surahList.length > 0) {
+      LocalStorage.set('surahList', state.surahList)
+      return state.surahList
+    }
+    if (LocalStorage.has('surahList')) {
+      return LocalStorage.getItem('surahList')
+    }
   },
 }

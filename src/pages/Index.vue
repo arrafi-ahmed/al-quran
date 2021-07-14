@@ -48,13 +48,7 @@ export default {
     const $q = useQuasar()
 
     if (!$q.localStorage.has('surahList')) {
-      ;(async () => {
-        await store.dispatch('surah/getSurahList')
-
-        if (!$q.localStorage.has('surahList')) {
-          $q.localStorage.set('surahList', surahList.value)
-        }
-      })()
+      store.dispatch('surah/getSurahList')
     }
 
     const surahList = computed(() => {

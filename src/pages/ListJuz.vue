@@ -62,15 +62,7 @@ export default {
             }
           })
           .then(() => {
-            if (!$q.localStorage.has('surahList')) {
-              $q.localStorage.set('surahList', surahList.value)
-            }
-
             getSurahName()
-
-            if (!$q.localStorage.has('juzList')) {
-              $q.localStorage.set('juzList', juzList.value)
-            }
           })
           .catch((err) => {
             console.log(err)
